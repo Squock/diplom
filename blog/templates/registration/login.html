@@ -1,0 +1,48 @@
+{% load staticfiles %}
+<html>
+
+<head>
+    <title>Главная страница</title>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="{% static 'css/blog.css' %}">
+    <link href="https://fonts.googleapis.com/css?family=Lobster&subset=latin,cyrillic" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="page-header">
+                    <h1> <em>Сайт Сборщик документов </em> </h1>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-4 col-xs-off">
+                <form method='post'>
+                    {% csrf_token %} {% if form.errors %}
+                    <div class="alert">Неправильный логин или пароль.</div>
+                    {% endif %}
+                    <div class="form-group">
+                        <label for="username">Ваш логин:</label>
+                        <input type="text" class="form-control" type="text" name="username" id="username" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Ваш пароль:</label>
+                        <input type="password" class="form-control" type="password" name="password" id="password" required>
+                    </div>
+                    <input type="submit" class="btn btn-primary" value="Вход"> {# <a href="{% url 'registration' %}">Регистрация</a> #}
+                    <a href="/accounts/registration"><button type="button" class="btn btn-primary">Регистрация</button></a>
+
+
+                </form>
+                <h1>Для работы с сайтом необходимо авторизоваться, или зарегистрироваться</h1>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

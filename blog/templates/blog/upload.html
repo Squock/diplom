@@ -1,0 +1,240 @@
+{% load staticfiles %}
+<html>
+
+<head>
+   <title>Главная страница</title>
+   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+   <link rel="stylesheet" href="{% static 'css/blog.css' %}">
+   <link href="https://fonts.googleapis.com/css?family=Lobster&subset=latin,cyrillic" rel="stylesheet" type="text/css"> {% csrf_token %}
+   <script src="https://code.jquery.com/jquery.min.js"></script>
+   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+   <div class="container">
+       <div class="row">
+           <div class="col-xs-12">
+               <nav class="navbar navbar-default">
+                   <div class="container-fluid">
+                       <!-- Brand and toggle get grouped for better mobile display -->
+                       <div class="navbar-header">
+                           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+           <span class="sr-only">Toggle navigation</span>
+           <span class="icon-bar"></span>
+           <span class="icon-bar"></span>
+           <span class="icon-bar"></span>
+         </button>
+                           <a class="navbar-brand" href="/">Главная</a>
+                       </div>
+
+                       <!-- Collect the nav links, forms, and other content for toggling -->
+                       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                           <ul class="nav navbar-nav">
+                             <li class="dropdown">
+                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Изменить <b class="caret"></b></a>
+                                 <ul class="dropdown-menu">
+                                     <li><a href="filling">Данные организации</a></li>
+                                     <li><a href="worker">Данные сотрудника</a></li>
+                                 </ul>
+                             </li>
+                               <li><a href="contact">Контакты</a></li>
+
+                           </ul>
+                           <ul class="nav navbar-nav navbar-right">
+                               <li><a href="/cabinet">{%if user.is_authenticated %}
+                                       <p>Добро пожаловать, {{ user.username }}</p>
+                                       {% endif %}</li></a>
+                                   <li><a href="/accounts/logout">Выход</a></li>
+
+                           </ul>
+                       </div>
+                       <!-- /.navbar-collapse -->
+                   </div>
+                   <!-- /.container-fluid -->
+               </nav>
+           </div>
+       </div>
+   </div>
+   <style>
+       body {
+           font: 13pt Arial, Helvetica, sans-serif;
+           /* Шрифт теста */
+           background: #ffffff;
+           /* Цвет фона */
+       }
+
+       h2 {
+           font-size: 18px;
+           /* Размер шрифта в заголовке */
+           color: #080808;
+           /* Цвет заголовка */
+           margin-top: 0;
+           /* Отступ сверху */
+       }
+
+       .container {
+           width: 1000px;
+           /* Ширина слоя */
+           margin: 0 auto;
+           /* Выравнивнить весь блок по центру */
+           background: #f0f0f0;
+           /* Цвет фона левой колонки */
+       }
+
+       .header {
+           font-size: 38px;
+           /* Размер текста в шапке */
+           text-align: center;
+           /* Выравнивание текст шапки по центру */
+           padding: 5px;
+           /* Отступы внутри блока шапки */
+           background: #94c4d3;
+           /* Цвет фона шапки */
+           color: #fff;
+           /* Цвет текста */
+       }
+
+       .sidebar {
+           margin-top: 10px;
+           width: 110px;
+           /* Ширина блока */
+           padding: 0 10px;
+           /* Отступы внутри левого блока */
+           float: right;
+           /* Обтекание блока по левому краю */
+       }
+
+       .content {
+           margin-right: 130px;
+           /* Отступ справа */
+           padding: 10px;
+           /* Отступы внутри правого блока */
+           background: #fff;
+           /* Цвет фона правого блока */
+           min-height: 800px;
+       }
+
+       .footer {
+           background: #8fa09b;
+           /* Цвет фона нижнего блока-подвала */
+           color: #fff;
+           /* Цвет текста подвала */
+           padding: 5px;
+           /* Отступы внутри блока */
+           clear: right;
+           /* Отменяем действие float */
+       }
+   </style>
+</head>
+
+<body>
+   <div class="container">
+       <div class="header">Сайт сборщик документов</div>
+       <div class="sidebar">
+           <style>
+               #calendar2 {
+                   width: 100%;
+                   font: monospace;
+                   line-height: 1.2em;
+                   font-size: 15px;
+                   text-align: center;
+               }
+
+               #calendar2 thead tr:last-child {
+                   font-size: small;
+                   color: rgb(85, 85, 85);
+               }
+
+               #calendar2 thead tr:nth-child(1) td:nth-child(2) {
+                   color: rgb(50, 50, 50);
+               }
+
+               #calendar2 thead tr:nth-child(1) td:nth-child(1):hover,
+               #calendar2 thead tr:nth-child(1) td:nth-child(3):hover {
+                   cursor: pointer;
+               }
+
+               #calendar2 tbody td {
+                   color: rgb(44, 86, 122);
+               }
+
+               #calendar2 tbody td:nth-child(n+6),
+               #calendar2 .holiday {
+                   color: rgb(231, 140, 92);
+               }
+
+               #calendar2 tbody td.today {
+                   background: rgb(220, 0, 0);
+                   color: #fff;
+               }
+           </style>
+
+           <table id="calendar2">
+               <thead>
+                   <tr>
+                       <td>‹
+                           <td colspan="5">
+                               <td>›
+                                   <tr>
+                                       <td>Пн
+                                           <td>Вт
+                                               <td>Ср
+                                                   <td>Чт
+                                                       <td>Пт
+                                                           <td>Сб
+                                                               <td>Вс
+                                                                   <tbody>
+           </table>
+
+           <script>
+               function Calendar2(id, year, month) {
+                   var Dlast = new Date(year, month + 1, 0).getDate(),
+                       D = new Date(year, month, Dlast),
+                       DNlast = new Date(D.getFullYear(), D.getMonth(), Dlast).getDay(),
+                       DNfirst = new Date(D.getFullYear(), D.getMonth(), 1).getDay(),
+                       calendar = '<tr>',
+                       month = ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"];
+                   if (DNfirst != 0) {
+                       for (var i = 1; i < DNfirst; i++) calendar += '<td>';
+                   } else {
+                       for (var i = 0; i < 6; i++) calendar += '<td>';
+                   }
+                   for (var i = 1; i <= Dlast; i++) {
+                       if (i == new Date().getDate() && D.getFullYear() == new Date().getFullYear() && D.getMonth() == new Date().getMonth()) {
+                           calendar += '<td class="today">' + i;
+                       } else {
+                           calendar += '<td>' + i;
+                       }
+                       if (new Date(D.getFullYear(), D.getMonth(), i).getDay() == 0) {
+                           calendar += '<tr>';
+                       }
+                   }
+                   for (var i = DNlast; i < 7; i++) calendar += '<td>&nbsp;';
+                   document.querySelector('#' + id + ' tbody').innerHTML = calendar;
+                   document.querySelector('#' + id + ' thead td:nth-child(2)').innerHTML = month[D.getMonth()] + ' ' + D.getFullYear();
+                   document.querySelector('#' + id + ' thead td:nth-child(2)').dataset.month = D.getMonth();
+                   document.querySelector('#' + id + ' thead td:nth-child(2)').dataset.year = D.getFullYear();
+                   if (document.querySelectorAll('#' + id + ' tbody tr').length < 6) { // чтобы при перелистывании месяцев не "подпрыгивала" вся страница, добавляется ряд пустых клеток. Итог: всегда 6 строк для цифр
+                       document.querySelector('#' + id + ' tbody').innerHTML += '<tr><td>&nbsp;<td>&nbsp;<td>&nbsp;<td>&nbsp;<td>&nbsp;<td>&nbsp;<td>&nbsp;';
+                   }
+               }
+               Calendar2("calendar2", new Date().getFullYear(), new Date().getMonth());
+               // переключатель минус месяц
+               document.querySelector('#calendar2 thead tr:nth-child(1) td:nth-child(1)').onclick = function() {
+                       Calendar2("calendar2", document.querySelector('#calendar2 thead td:nth-child(2)').dataset.year, parseFloat(document.querySelector('#calendar2 thead td:nth-child(2)').dataset.month) - 1);
+                   }
+                   // переключатель плюс месяц
+               document.querySelector('#calendar2 thead tr:nth-child(1) td:nth-child(3)').onclick = function() {
+                   Calendar2("calendar2", document.querySelector('#calendar2 thead td:nth-child(2)').dataset.year, parseFloat(document.querySelector('#calendar2 thead td:nth-child(2)').dataset.month) + 1);
+               }
+           </script>
+       </div>
+       <div class="content">
+           <h2>Добро пожаловать</h2>
+           <input type="checkbox" value="{{ form.title }}"><span class="label label-default">{{ form.title }}</span>
+
+       </div>
+       <div class="footer">&copy; ЦЗИ "Север"</div>
+   </div>
+
+</body>
+
+</html>
