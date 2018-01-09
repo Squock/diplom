@@ -1,69 +1,62 @@
 {% load staticfiles %}
 <html>
-
+  {% csrf_token %}
 <head>
-   <title>Регистрация</title>
-   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
-   <link rel="stylesheet" href="{% static 'css/blog.css' %}">
-   <link href="https://fonts.googleapis.com/css?family=Lobster&subset=latin,cyrillic" rel="stylesheet" type="text/css">
+    <title>Регистрация</title>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="{% static 'css/blog.css' %}">
+    <link href="https://fonts.googleapis.com/css?family=Lobster&subset=latin,cyrillic" rel="stylesheet" type="text/css">
 </head>
 
 <body>
-   <div class="container">
-       <div class="row">
-           <div class="col-xs-12">
-               <div class="page-header">
-                   <h1> <em>Сайт Сборщик документов </em> </h1>
-               </div>
-           </div>
-       </div>
-       <div class="row">
-           <div class="col-xs-4 col-xs-off">
-              <form method="post">
-                {% csrf_token %}
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="page-header">
+                <h1><em>Сайт Сборщик документов </em></h1>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-4 col-xs-off">
+                    <h1>Регистрация пользователя</h1>
+                    <form action="." method="post">
+                     {% csrf_token %}
+                        {% if form.error_dict %}
+                            <p class="error">Пожалуйста исправьте нижеприведённые ошибки.</p>
+                        {% endif %}
 
-  {% block content %}
-        <h1>Регистрация пользователя</h1>
-    <form action="." method="post">
-      {% if form.error_dict %}
-        <p class="error">Пожалуйста исправьте нижеприведённые ошибки.</p>
-      {% endif %}
-
-      {% if form.username.errors %}
-        {{ form.username.html_error_list }}
-      {% endif %}
-      <div class="form-group">
-          <label>Логин:</label>
-          {{ form.username }}
-      </div>
+                        {% if form.username.errors %}
+                            {{ form.username.html_error_list }}
+                        {% endif %}
+                        <div class="form-group">
+                            <label>Логин:</label>
+                            {{ form.username }}
+                        </div>
 
 
-      {% if form.password1.errors %}
-        {{ form.password1.html_error_list }}
-      {% endif %}
+                        {% if form.password1.errors %}
+                            {{ form.password1.html_error_list }}
+                        {% endif %}
 
-      <div class="form-group">
-          <label>Пароль:</label>
-           {{ form.password1 }}
-      </div>
-      {% if form.password2.errors %}
-        {{ form.password2.html_error_list }}
-      {% endif %}
-      <div class="form-group">
-          <label>Пароль (снова):</label>
-           {{ form.password2 }}
-      </div>
+                        <div class="form-group">
+                            <label>Пароль:</label>
+                            {{ form.password1 }}
+                        </div>
+                        {% if form.password2.errors %}
+                            {{ form.password2.html_error_list }}
+                        {% endif %}
+                        <div class="form-group">
+                            <label>Пароль (снова):</label>
+                            {{ form.password2 }}
+                        </div>
 
-      <button type="submit" class="btn btn-primary">Зарегистрировать</button>
-    </form>
-  {% endblock %}
+                        <button type="submit" class="btn btn-primary">Зарегистрировать</button>
+                    </form>
+        </div>
 
-
-           </div>
-
-       </div>
-          </form>
-   </div>
-
+    </div>
+</div>
+</body>
 </html>
