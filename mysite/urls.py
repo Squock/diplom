@@ -1,7 +1,7 @@
 from django.conf.urls import include, url
 from django.contrib import admin
 # import blog
-from django.contrib.auth.views import login, logout
+from django.contrib.auth.views import login
 from blog import views
 from django.conf import settings
 from django.conf.urls.static import static
@@ -12,28 +12,23 @@ urlpatterns = [
     # url(r'^blog/', include('blog.urls')),
 
     url(r'^admin/', include(admin.site.urls)),
-    # url(r'', include('blog.urls')),
     url(r'^$', views.post_list, name='index'),
-    url(r'^accounts/profile', views.DocumentTypeListView.as_view(), name='index'),
-    #url(r'^accounts/login/$',  login),
     url(r'^accounts/login',  login),
     url(r'^accounts/logout/$', views.logout),
-    #url(r'^filling', views.fillingView, name='document'),
     url(r'^filling', views.fillingView),
+    url(r'^organization/(?P<pk>\d+)/$', views.OrganizationUpdate.as_view(), name='org_edit'),
     url(r'^accounts/registration', views.registrationView, name='registration'),
-    url(r'^connect', views.RTFobject, name='test'),
-    url(r'^userdata', views.userView, name='userView'),
+    url(r'^userdata', views.userview, name='userview'),
     url(r'^contact', views.contact),
     url(r'^cabinet', views.cabinet),
-    url(r'^worker/$', views.Worker, name='worker'),
-    url(r'^worker/(?P<worker_id>\d+)/$', views.Worker, name='worker'),
-    url(r'^worker_change', views.Worker_change, name='worker_change'),
-    url(r'^filling_change', views.fillingView_change, name='document_change'),
-    url(r'^orgdata', views.org_data, name='document_change'),
+    url(r'^worker/$', views.worker, name='worker'),
+    url(r'^worker/(?P<worker_id>\d+)/$', views.worker, name='worker'),
+    url(r'^worker_update/(?P<pk>\d+)/$', views.WorkerUpdate.as_view(), name='worker_edit'),
+    url(r'^orgdata', views.org_data, name='org_data'),
     url(r'^pass_set', views.pass_set, name='password_set'),
-    url(r'^upload', views.upload_file, name='upload_file'),
-    url(r'^download', views.download, name='download')
-    #url(r'^media\/(<C:\\myproject\\Новая папка\\django 1.8\\mysite\\media\\uploads\\>'))
+    url(r'^download', views.download, name='download'),
+    url(r'^worker_data', views.choose_worker, name='worker_data'),
+    url(r'^docx', views.download_docx, name='docx')
 ]
 
 if settings.DEBUG:

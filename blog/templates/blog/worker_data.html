@@ -1,0 +1,49 @@
+{% extends "base/menu.html" %}
+
+{% block title %} Заполнение организации {% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="content">
+            <div class="row">
+                <div class="col-xs-4 col-xs-off">
+                    <form method='post'>
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <fieldset id="check">
+                                <legend><input type="checkbox"> Выбрать все</legend>
+                                {% for item in items %}
+                                    {% if item.organization == oid %}
+                                        <input type="radio" name="acting" id="acting" value="{{ item.id }}">
+                                        <input type="checkbox" name="checkcomm{{ item.id }}" value="{{ item.name }}">
+                                        <a>{{ item.name }} {{ item.surname }} </a>
+                                        <br> {% endif %} {% endfor %}
+
+                            </fieldset>
+
+                        </div>
+                        <script>
+                            var main = document.querySelector('#check legend [type="checkbox"]'),
+                                all = document.querySelectorAll('#check > [type="checkbox"]');
+
+                            for (var i = 0; i < all.length; i++) {
+                                all[i].onclick = function () {
+                                    var allChecked = document.querySelectorAll('#check > [type="checkbox"]:checked').length;
+                                    main.checked = allChecked == all.length;
+                                    main.indeterminate = allChecked > 0 && allChecked < all.length;
+                                }
+                            }
+                            main.onclick = function () {
+                                for (var i = 0; i < all.length; i++) {
+                                    all[i].checked = this.checked;
+                                }
+                            }
+                        </script>
+                        <input type="submit" class="btn btn-primary" name=delete value="Удалить">
+                        <input type="submit" class="btn btn-primary" name="download">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

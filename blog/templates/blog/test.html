@@ -1,0 +1,48 @@
+{% extends "base/menu.html" %}
+
+{% block title %} Заполнение организации {% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="content">
+            <div class="row">
+                <div class="col-xs-4 col-xs-off">
+                    <form method='post'>
+                        {% csrf_token %}
+                        Выберите тип документов
+                        <div class="form-group">
+                            <fieldset id="checkdoc">
+                                <legend><input type="checkbox" name="doc"> Выбрать все</legend>
+                                {% for doc in docx %}
+                                    <input type="checkbox" id="checkdoc" name="doc{{ doc.id }}"
+                                           value="{{ doc.title }}"> {{ doc.title }} </a><br> {% endfor %}
+                            </fieldset>
+
+                        </div>
+                        <script>
+                            var main1 = document.querySelector('#checkdoc legend [type="checkbox"]'),
+                                all1 = document.querySelectorAll('#checkdoc > [type="checkbox"]');
+
+                            for (var i = 0; i < all1.length; i++) {
+                                all1[i].onclick = function () {
+                                    var allChecked1 = document.querySelectorAll('#checkdoc > [type="checkbox"]:checked').length;
+                                    main1.checked = allChecked1 == all1.length;
+                                    main1.indeterminate = allChecked1 > 0 && allChecked1 < all1.length;
+                                }
+                            }
+                            main1.onclick = function () {
+                                for (var i = 0; i < all1.length; i++) {
+                                    all1[i].checked = this.checked;
+                                }
+                            }
+                        </script>
+
+                        <input type="submit" class="btn btn-primary" name="download" value="Скачать">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer">&copy; ЦЗИ "Север"</div>
+    </div>
+{% endblock %}

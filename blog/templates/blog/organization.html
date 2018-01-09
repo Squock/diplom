@@ -1,0 +1,39 @@
+{% extends "base/menu.html" %}
+
+{% block title %} Заполнение организации {% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-4">
+                <form method='post'>
+                    {% csrf_token %}
+                    {% if form.non_field_errors %}
+                        <div class="alert">
+                            <ul>
+                                {% for error in form.non_field_errors %}
+                                    <li>{{ error }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    {% endif %}
+                    {% for field in form %}
+                        <div class="form-group{% if field.errors %} has-error{% endif %}">
+                            <label for="{{ field.id_for_label }}">{{ field.label_tag }}</label>
+                            {{ field }}
+                            {% if field.errors %}
+                                {% for error in field.errors %}
+                                    <div class="help-block">{{ error }}</div>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                    <input type="submit" class="btn btn-primary" value="Сохранить">
+                    <a href="{% url 'index' %}" class="btn btn-default">Отменить</a>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="footer">&copy; ЦЗИ "Север"</div>
+    </div>
+{% endblock %}

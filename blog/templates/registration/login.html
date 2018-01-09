@@ -1,6 +1,15 @@
 {% load staticfiles %}
 <html>
-
+<style>
+.col-xs-4 col-xs-off{
+padding: 50px;
+background: #ccc;
+position: fixed; top: 50%; left: 50%;
+-webkit-transform: translate(-50%, -50%);
+-ms-transform: translate(-50%, -50%);
+transform: translate(-50%, -50%);
+}
+</style>
 <head>
     <title>Главная страница</title>
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
@@ -19,6 +28,8 @@
                 </div>
             </div>
         </div>
+
+
         <div class="row">
             <div class="col-xs-4 col-xs-off">
                 <form method='post'>
@@ -33,11 +44,14 @@
                         <label for="password">Ваш пароль:</label>
                         <input type="password" class="form-control" type="password" name="password" id="password" required>
                     </div>
-                    <input type="submit" class="btn btn-primary" value="Вход"> {# <a href="{% url 'registration' %}">Регистрация</a> #}
-                    <a href="/accounts/registration"><button type="button" class="btn btn-primary">Регистрация</button></a>
+                    <!--<input type="submit" class="btn btn-primary" value="Вход"> {# <a href="{% url 'registration' %}">Регистрация</a> #}
+                    <a href="/accounts/registration"><button type="button" class="btn btn-primary">Регистрация</button></a> -->
 
+                    <button type="submit" class="btn btn-primary btn-lg btn-block">Вход</button>
 
+                    <a href="/accounts/registration"><button type="button" class="btn btn-default btn-lg btn-block">Регистрация</button></a>
                 </form>
+
                 <h1>Для работы с сайтом необходимо авторизоваться, или зарегистрироваться</h1>
             </div>
         </div>

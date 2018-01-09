@@ -40,6 +40,8 @@ INSTALLED_APPS = (
     'blog',
 )
 
+
+
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -85,7 +87,7 @@ DATABASES = {
         'PASSWORD': '123456',
         'HOST': 'localhost',
         'PORT': '5432',
-    }
+    },
 }
 
 
@@ -109,6 +111,4 @@ _PATH = os.path.abspath(os.path.dirname(__file__))
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 MEDIA_ROOT = os.path.join(_PATH, 'media')
-#MEDIA_ROOT = 'C:/myproject/Новая папка/django 1.8/mysite/media/'
-print("media",MEDIA_ROOT)
 MEDIA_URL = '/media/'

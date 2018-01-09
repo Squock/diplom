@@ -1,8 +1,6 @@
 from django.db import models
-from django.utils import timezone
-from django.contrib import auth
 from django.contrib.auth.models import User
-from django.db.models import OneToOneField, ForeignKey, CASCADE
+from django.db.models import ForeignKey, OneToOneField
 
 
 class Field(models.Model):
@@ -11,9 +9,10 @@ class Field(models.Model):
     category = models.ForeignKey('Category', on_delete=models.CASCADE)
     types = models.CharField(max_length=30)
 
-    class Meta():
+    class Meta:
         verbose_name = "Описание поля"
         verbose_name_plural = " Описания полей"
+
 
 class Value(models.Model):
     """Значение полей документов"""
@@ -21,91 +20,52 @@ class Value(models.Model):
     value = models.TextField()
     user = models.ForeignKey('auth.User')
 
+
 class Category(models.Model):
     """категория документов"""
     name = models.CharField(max_length=30)
 
+
 class UploadFileForm(models.Model):
-    """загрузка документов администратором"""
+    """
+    загруженные администратором шаблоны документов в формате docx 
+    предназначены для заполнения из данных пользователя
+    """
     title = models.CharField(max_length=30)
     file = models.FileField()
-    #field = ForeignKey('Field')
-class UserDoc(models.Model):
-    """документы пользователя"""
-    user = ForeignKey('auth.User')
-    userFile = models.FileField(upload_to='uploads/')
-
-class orgdata(models.Model):#Переименовать класс!
-    user = ForeignKey('auth.User')
-    doc = models.ForeignKey('Filling', on_delete=models.CASCADE)
-
-"""class Post(models.Model):
-
-    author = models.ForeignKey('auth.User')
-
-    #author = models.OneToOneField('auth.User')
-    title = models.CharField(max_length=200)
-    text = models.TextField()
-    created_date = models.DateTimeField(
-            default=timezone.now)
-    published_date = models.DateTimeField(
-            blank=True, null=True)
-
-    def publish(self):
-        self.published_date = timezone.now()
-        self.save()
-
-    def __str__(self):
-        return self.title"""
 
 
-class userdata(models.Model): #Переименовать класс!
+class Userdata(models.Model):
     """Данные пользователя"""
-    #u = User.objects.get(username__exact="username")
-    user = models.ForeignKey('auth.User')
-    #user = models.OneToOneField(User)
-    #attr = models.ForeignKey('Attribut')
-    first_name = models.CharField(max_length=30)
-    last_name =  models.CharField(max_length=30)
-    second_name = models.CharField(max_length=30)
-    email = models.CharField(max_length=30)
-    number = models.CharField(max_length=30, null=True)
+    user = models.OneToOneField('auth.User')
+    name = models.CharField(max_length=30, verbose_name="Имя")
+    surname = models.CharField(max_length=30, verbose_name="Фамилия")
+    second_name = models.CharField(max_length=30, verbose_name="Отчество")
+    email = models.CharField(max_length=30, verbose_name="Элекронная почта")
+    number = models.CharField(max_length=30, null=True, verbose_name="Номер телефона")
 
-class worker(models.Model): #Переименовать класс!
+
+class Worker(models.Model):
     """Данные сотрудника"""
-    author_id = models.ForeignKey('auth.User')
-    w_name = models.CharField(max_length=30)
-    w_surname = models.CharField(max_length=30)
-    w_lastname = models.CharField(max_length=30)
-    position = models.CharField(max_length=30)
+    organization = ForeignKey('Organization', related_name='workers')
+    name = models.CharField(max_length=30, verbose_name="Имя")
+    surname = models.CharField(max_length=30, verbose_name="Фамилия")
+    second_name = models.CharField(max_length=30, verbose_name="Отчество")
+    position = models.CharField(max_length=30, verbose_name="Должность")
 
-class DocumentType(models.Model):
-    name = models.CharField(max_length=30)
-    description = models.TextField(blank=True)
 
-class Filling(models.Model): #Переименовать класс!
+class Organization(models.Model):
     """Данные организации"""
-    author_id = models.ForeignKey('auth.User')
-    #attr = models.ForeignKey('Attribut')
-    inn = models.IntegerField()
-    ogrn = models.IntegerField()
-    name = models.CharField(max_length=30)
-    city = models.CharField(max_length=30)
-    address = models.CharField(max_length=30)
-
-"""class Attribut(models.Model):
-    name = models.CharField(max_length=30)
-    type_choise = models.CharField(max_length=30)"""
-
-
-#    created_date = models.DateTimeField(
-#            default=timezone.now)
-#    published_date = models.DateTimeField(
-#               blank=True, null=True)
-
-#    def publish(self):
-#        self.published_date = timezone.now()
-#        self.save()
-
-#    def __str__(self):
-#        return self.title
+    author = models.ForeignKey('auth.User')
+    inn = models.CharField("ИНН", max_length=12)
+    ogrn = models.CharField("ОГРН", max_length=13)
+    name = models.CharField("Наименование организации", max_length=100)
+    city = models.CharField("Населенный пункт", max_length=30)
+    fact_address = models.CharField("Фактический адрес", max_length=100, blank=True)
+    reg_address = models.CharField("Юридический адрес", max_length=100, blank=True)
+    post_address = models.CharField("Почтовый адрес", max_length=100, blank=True)
+    chief = ForeignKey('Worker', blank=True, null=True, related_name='chief', verbose_name="Руководитель")
+    # chief_name = models.CharField(max_length=30, default='some string', verbose_name="Имя")
+    # chief_surname = models.CharField(max_length=30, default='some string', verbose_name="Фамилия")
+    # chief_secondname = models.CharField(max_length=30, default='some string', verbose_name="Отчество")
+    # chief_fullposition = models.CharField(max_length=30, default='some string', verbose_name="Должность")
